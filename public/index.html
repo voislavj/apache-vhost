@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Apache VirtualHost configuration</title>
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/js/lodash.js"></script>
+    <script type="text/javascript" src="/js/backbone.js"></script>
+    <script type="text/javascript" src="/js/require.js" data-main="/js/app.js"></script>
+</head>
+
+<body>
+<p><input type="button" id="apache-restart" value="Restart Apache"></p>
+<menu id="vhosts"></menu>
+<div id="content"></div>
+
+<!-- templates -->
+<script type="text/template" id="vhost-item">
+    <a href="/#<%= name %>"><%= name %></a>
+</script>
+
+<script type="text/template" id="vhost-form">
+    <form action="/#save" method="post">
+        <input type="submit" value="Save">
+        <input type="button" value="Destroy">
+        <%= (_.template($('#vhost-form-content').html()))({data: data}) %>
+    </form>
+</script>
+
+<script type="text/template" id="vhost-form-content">
+    <% if (typeof(parentItem)=='undefined') parentItem='data'; %>
+    <% _.each(data, function(value, name){ %>
+    <%
+        if (_.isArray(value)) {
+            value = value.pop();
+        }
+    %>
+    
+    <% if (_.isObject(value)){ %>
+        <fieldset>
+            <legend><%= name %></legend>
+            <%= (_.template($('#vhost-form-content').html()))({data: value, parentItem: 'data['+name+']'}) %>
+        </fieldset>
+    <% } else { %>
+        <p><label for="data_<%= name %>"><%= name %></label>
+        <input type="text" id="data_<%= name %>" name="<%= parentItem %>[<%= name %>]" value="<%= value %>"></p>
+    <% } %>
+
+    <% }) %>
+</script>
+
+</body>
+</html>

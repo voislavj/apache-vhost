@@ -1,5 +1,6 @@
 var PORT   = 24612;
 var apache = 'C:/webserver/Apache2.4';
+var public_html = __dirname + '/public';
 
 var app   = require('http').createServer(server),
     io    = require('socket.io').listen(app),
@@ -11,6 +12,7 @@ var app   = require('http').createServer(server),
     command;
 
 io.sockets.on('connection', function(socket){
+    var hosts = [];
     getVirtualHosts(function(hosts){
         socket.emit('init', hosts);
     });
@@ -30,13 +32,13 @@ app.listen(PORT);
 
 
 function server(req, res) {
-    fs.exists(__dirname + req.url, function(exists){
-        var path = __dirname + req.url;
+    var path = public_html + req.url;
+    
+    fs.exists(path, function(exists){        
         fs.stat(path, function(err, stats){
-            if (! exists || stats.isDirectory() || err) {
-                path = __dirname + '/index.html';
+            if (err || !exists || stats.isDirectory()) {
+                path = public_html + '/index.html';
             }
-            
             fs.readFile(path, function(err, data){
                 if (err) {
                     res.writeHead(500);
@@ -51,9 +53,8 @@ function server(req, res) {
 }
 
 function getVirtualHosts(callback) {
-    var hosts = [];
-    
     apacheconf(apache + '/conf/extra/httpd-vhosts.conf', function(err, config, parser){
+        var hosts = [];
         _.each(config.VirtualHost, function(vhost){
             hosts.push(vhost);
         });
