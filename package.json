@@ -6,5 +6,9 @@
         "lodash":     "latest",
         "apacheconf": "latest",
         "socket.io":  "latest"
+    },
+    "repository": {
+        "type": "git",
+        "url":  "http://github.com/voislavj/apache-vhost.git"
     }
 }
