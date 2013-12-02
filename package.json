@@ -3,9 +3,10 @@
     "description": "Apache VirtualHost Admin tool",
     "author":      "Voislav Jovanovic <voislavj@gmail.com>",
     "dependencies": {
-        "lodash":     "latest",
-        "apacheconf": "latest",
-        "socket.io":  "latest"
+        "lodash":     "*",
+        "apacheconf": "*",
+        "socket.io":  "*",
+        "backbone":   "*"
     },
     "repository": {
         "type": "git",
