@@ -3,6 +3,8 @@
     "description": "Apache VirtualHost Admin tool",
     "author":      "Voislav Jovanovic <voislavj@gmail.com>",
     "dependencies": {
+        "browserify": "*",
+        "uglify-js":  "*",
         "lodash":     "*",
         "apacheconf": "*",
         "socket.io":  "*",
