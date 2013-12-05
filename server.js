@@ -9,11 +9,24 @@ var uglify     = require('uglify-js');
 var _          = require('lodash');
 var apacheconf = require('apacheconf');
 var query      = require('querystring');
+var io         = require('socket.io').listen(app);
+
 VirtualHosts   = [];
 
 app.listen(CONFIG.app.server.port);
 console.log('Listening ' + CONFIG.app.server.port + "...");
 
+io.sockets.on('connection', function(socket){
+    socket.on('apache-restart', function(){
+        var ctrl = getController('apache');
+        ctrl.restart(function(err, data){
+            socket.emit('restarted', {
+                err: err,
+                data: data
+            });
+        });
+    });
+});
 
 function requestHandler(req, res) {
     if (req.url == "/") {
@@ -46,7 +59,7 @@ function handleRequest(request, response) {
         
         try {
             var args  = requestItems || [];
-            var ctrl  = require(CONFIG.app.root + "/" + controller);
+            var ctrl  = getController(controller);
             ctrl.data = query.parse(data);
             
             var html = ctrl[action].apply(ctrl, args) || '';
@@ -56,6 +69,10 @@ function handleRequest(request, response) {
             httpError(response, e);
         }
     });
+}
+
+function getController(name) {
+    return require(CONFIG.app.root + '/' + name);
 }
 
 function handleLayout(request, response) {

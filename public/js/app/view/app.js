@@ -36,15 +36,15 @@ module.exports = Backbone.View.extend({
     
     apacheRestart: function() {
         var _this = this;
-        Lib.ajax({
-            url: '/apache/restart',
-            start: function() {
-                _this.$el.addClass('loading');
-            },
-            complete: function(html, response) {
-                _this.$el.removeClass('loading');
-                alert(html);
+        var socket = io.connect('http://' + location.hostname + ":" + location.port);
+        socket.on('restarted', function(result){
+            _this.$el.removeClass('loading');
+            
+            if (result.err) {
+                alert('Error: ' + result.err);
             }
         });
+        this.$el.addClass('loading');
+        socket.emit('apache-restart');
     }
 });

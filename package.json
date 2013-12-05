@@ -9,7 +9,7 @@
         "apacheconf": "*",
         "socket.io":  "*",
         "backbone":   "*",
-        "exec-sync":  "*"
+        "socket.io":  "*"
     },
     "devDependencies": {
         "nodemon":    "*"
