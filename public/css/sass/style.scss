@@ -1,0 +1,76 @@
+@import "reset"; 
+
+body {
+    padding: 20px;
+    background:#eee;
+    color:#555;
+    font:14px Arial;
+}
+
+form {
+    
+}
+    input[type=text] {
+        padding:2px 4px;
+        border:1px solid #ccc;
+        font:11px Arial;
+        width:97%
+    }
+    fieldset {
+        border:1px solid #ccc;
+        padding:10px;
+        background:#ddd;
+        margin:30px 0 10px
+    }
+    legend {
+        display:inline-block;
+        height:16px;
+        line-height:16px;
+        padding:2px 5px;
+        color:#000;
+        background:#ddd;
+        border:1px solid #ccc;
+        border-bottom-color: #ddd;
+        margin-top:-20px
+    }
+
+#vhosts {
+    list-style:none;
+    float:left;
+    width:200px;
+    text-align:right
+}
+    #vhosts li{
+        display:block;
+        float:left;
+        width:100%
+    }
+    #vhosts a {
+        color:#999;
+        text-decoration:none;
+        display:block;
+        float:right;
+        padding:5px 10px
+    }
+    #vhosts a:hover, #vhosts .selected a {
+        background:#fff;
+        color:#333
+    }
+
+#content {
+    float:left;
+    padding:10px;
+    background:#fff;
+    width:400px;
+    min-height:400px;
+    font-size:11px;
+}
+    #content p {
+        margin-bottom:15px
+    }
+    #content label {
+        display:block;
+        cursor:pointer;
+        margin-bottom:5px;
+        font-weight:bolder;
+    }

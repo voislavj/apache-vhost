@@ -1,4 +1,6 @@
-var App = Backbone.Router.extend({
+var Backbone   = require('backbone');
+
+module.exports = Backbone.Router.extend({
     restfulUrl:"http://api.openkeyval.org/",
     routes: {
         ":name": "edit",
@@ -41,6 +43,5 @@ var App = Backbone.Router.extend({
     },
     save: function(form) {
         var data = $(form).serializeArray();
-        console.dir(data)
     }
 });

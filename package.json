@@ -10,6 +10,12 @@
         "socket.io":  "*",
         "backbone":   "*"
     },
+    "devDependencies": {
+        "nodemon":    "*"
+    },
+    "scripts": {
+        "start": "nodemon server.js"
+    },
     "repository": {
         "type": "git",
         "url":  "http://github.com/voislavj/apache-vhost.git"

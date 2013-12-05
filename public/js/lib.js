@@ -1,22 +1,19 @@
-var Lib = {
+var _     = require('lodash');
+var http  = require('http');
+var query = require('querystring');
+
+module.exports = {
     host: location.hostname,
     port: 24612,
     
-    _defaultOptions: {
+    _ajaxDefaultOptions: {
         type: 'GET',
         data: {},
+        start: function(){},
         complete: function(){}
-    },
-    
-    extend: function(extendee, extender){
-        return require('lodash').extend(extendee, extender);
-    },
-        
+    },  
     ajax: function(options){
-        options = this.extend(this._defaultOptions, options);
-        
-        var http  = require('http');
-        var query = require('querystring');
+        options = _.extend(this._ajaxDefaultOptions, options);
 
         var post_data = query.stringify(options.data);
         
@@ -28,6 +25,7 @@ var Lib = {
             };
         }
 
+        options.start();
         var request = http.request({
                 host: this.host,
                 port: this.port,
@@ -49,5 +47,3 @@ var Lib = {
         request.end();
     }
 };
-
-module.exports = Lib;

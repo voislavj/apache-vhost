@@ -1,4 +1,6 @@
-var Vhost = Backbone.Model.extend({
+var Backbone   = require('backbone');
+
+Vhost = Backbone.Model.extend({
     idAttribute: 'ServerName',
     defaults: function(){
         return {
@@ -8,6 +10,6 @@ var Vhost = Backbone.Model.extend({
         };
     },
     name: function() {
-        return this.get('ServerName');
+        return this.get('ServerName').toString();
     }
 });

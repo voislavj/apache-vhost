@@ -1,0 +1,15 @@
+{
+    "app": {
+        "public_dir": "/public",
+        "server": {
+            "port":   "24612"
+        },
+        "script": {
+            "compress": 1
+        }
+    },
+    "apache": {
+        "root":       "C:/webserver/Apache2.4",
+        "vhost_path": "/conf/extra/httpd-vhosts.conf"
+    }
+}

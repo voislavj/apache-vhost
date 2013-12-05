@@ -1,7 +1,5 @@
-var Index = {
+module.exports = {
     index: function() {
-        return 'Blah Blah';
+        return JSON.stringify(VirtualHosts);
     }
 };
-
-module.exports = Index;

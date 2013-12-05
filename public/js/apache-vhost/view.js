@@ -1,45 +1,62 @@
-var VhostView = Backbone.View.extend({
-        tagName:    'li',
+var Backbone = require('backbone');
+var _        = require('lodash');
+
+VhostView = Backbone.View.extend({
+    tagName:    'li',
     template:   _.template($('#vhost-item').html()),
     
-    initialize: function(){
+    events: {
+        "click a": "edit"
     },
     
-    render: function(collection,options){
+    initialize: function(){
+        this.content = $('#content');
+        this.render();
+    },
+    
+    render: function(){
         this.$el
             .html(this.template({
-                name: this.model.name(),
+                name: this.model.name().toString(),
                 attr: this.model.attributes
             }))
-            .attr('id', 'li-'+this.model.name());
+            .data('name', this.model.name());
+        
         return this;
+    },
+    
+    edit: function(e) {
+        var template = _.template($('#vhost-form').html());
+        
+        _.defaults(this.model.attributes, this.model.defaults());
+        var data = _.cloneDeep(this.model.attributes);
+        for (x in data) {
+            if (_.isArray(data[x])) {
+                data[x] = data[x].pop();
+            }
+            if (! _.isObject(data[x])) {
+                data[x] = _.escape(data[x]);
+            }
+        }
+        
+        html = template({data: data});
+        
+        this.content.html(html);
     }
 });
 
-var VhostsApp = Backbone.View.extend({
-    el: $(document.body),
+VhostsApp = Backbone.View.extend({
+    el: '#app-container',
     
     initialize: function() {
-        this.ul = $('#vhosts');
+        this.menu = $('#vhosts');
         this.content = $('#content');
         this.items = {};
         
-        this.listenTo(this.collection, 'add', this.add);
-        this.listenTo(this.collection, 'sort', this.sort);
-    },
-    
-    add: function(model, collection, options){
-        var item = new VhostView({model: model});
-        this.items[model.name()] = item;
-    },
-    
-    sort: function(collection) {
-        var ul = this.ul;
-        var _this = this;
-        
-        ul.empty();
-        collection.each(function(model){
-            ul.append(_this.items[model.name()].render().el);
+        var _this = this, item;
+        this.collection.each(function(model){
+            item = new VhostView({model: model});
+            _this.menu.append(item.el);
         });
     },
     
@@ -54,3 +71,5 @@ var VhostsApp = Backbone.View.extend({
         this.content.html(html);
     }
 });
+
+module.exports = VhostsApp;

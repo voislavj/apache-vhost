@@ -5,13 +5,14 @@
     <meta charset="utf-8">
     
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <script type="text/javascript" src="/js/index.js"></script>
 </head>
 
 <body>
-<p><input type="button" id="apache-restart" value="Restart Apache"></p>
-<menu id="vhosts"></menu>
-<div id="content"></div>
+<div id="app-container">
+	<input type="button" id="apache-restart" value="Restart Apache">
+	<menu id="vhosts"></menu>
+	<div id="content"></div>
+</div>
 
 <!-- templates -->
 <script type="text/template" id="vhost-item">
@@ -48,5 +49,6 @@
     <% }) %>
 </script>
 
+<script type="text/javascript" src="/js/index.js"></script>
 </body>
 </html>

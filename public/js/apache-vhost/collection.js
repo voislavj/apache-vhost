@@ -1,5 +1,6 @@
-var VhostsCollection = Backbone.Collection.extend({
+var Backbone   = require('backbone');
+
+module.exports = Backbone.Collection.extend({
     model: Vhost,
     comparator: 'ServerName'
 });
-var Vhosts = new VhostsCollection();
