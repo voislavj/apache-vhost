@@ -1,6 +1,6 @@
 var Backbone   = require('backbone');
 
-Vhost = Backbone.Model.extend({
+module.exports = Backbone.Model.extend({
     idAttribute: 'ServerName',
     defaults: function(){
         return {

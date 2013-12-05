@@ -41,25 +41,25 @@ function handleRequest(request, response) {
     request.on('end', function(){
         var requestItems = request.url.replace(/^\//, '').split("/");
         
-        var controller = requestItems.shift() || 'index';
-        var action     = requestItems.shift() || 'index';
+        var controller = requestItems.shift() || CONFIG.app.defaults.controller;
+        var action     = requestItems.shift() || CONFIG.app.defaults.action;
         
         try {
             var args  = requestItems || [];
-            var ctrl  = require('./app/' + controller);
+            var ctrl  = require(CONFIG.app.root + "/" + controller);
             ctrl.data = query.parse(data);
             
             var html = ctrl[action].apply(ctrl, args) || '';
             httpOk(response, html);
             
         } catch (e) {
-            httpError(response, 'Error' + e);
+            httpError(response, e);
         }
     });
 }
 
 function handleLayout(request, response) {
-    fs.readFile(public_html + "/index.html", function(err, data){
+    fs.readFile(public_html + CONFIG.app.layout_path, function(err, data){
         if (err) {
             return httpError(res, err);
         }
@@ -78,9 +78,13 @@ function handleStatic(request, response) {
     var path = public_html + file;
     
     if (file.match(/\.js$/)) {
-        browsery("./public/js/index.js", function(err, script){
+    	var dispatcher_path = [
+    	    public_html,
+    	    CONFIG.app.server.js_dispatcher
+        ];
+        browsery(dispatcher_path.join("/"), function(err, script){
             if (err) {
-                return httpError(response, 'error: ' + err);
+                return httpError(response, err);
             }
             
             httpOk(response, script);
@@ -123,10 +127,11 @@ function browsery(file, callback) {
 };
 
 function httpError(response, message) {
+	console.log("msg: "+ message);
     response.writeHeader(500);
-    response.end(message || "");
+    response.end(message || "Error");
 }
 function httpOk(response, data) {
     response.writeHeader(200);
-    response.end(data || '');
+    response.end(data || "OK");
 }

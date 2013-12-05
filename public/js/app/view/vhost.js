@@ -1,7 +1,7 @@
 var Backbone = require('backbone');
 var _        = require('lodash');
 
-VhostView = Backbone.View.extend({
+module.exports = Backbone.View.extend({
     tagName:    'li',
     template:   _.template($('#vhost-item').html()),
     
@@ -26,6 +26,8 @@ VhostView = Backbone.View.extend({
     },
     
     edit: function(e) {
+    	this.$el.parent().find('a').removeClass('selected');
+    	this.$el.find('a').addClass('selected');
         var template = _.template($('#vhost-form').html());
         
         _.defaults(this.model.attributes, this.model.defaults());
@@ -42,34 +44,12 @@ VhostView = Backbone.View.extend({
         html = template({data: data});
         
         this.content.html(html);
+        
+        $('#content').css('height', 'auto');
+        var contentHeight = $('#content').height();
+        var vhostsHeight  = $('#vhosts').height();
+        if (contentHeight < vhostsHeight) {
+        	$('#content').css('height', vhostsHeight);
+        }
     }
 });
-
-VhostsApp = Backbone.View.extend({
-    el: '#app-container',
-    
-    initialize: function() {
-        this.menu = $('#vhosts');
-        this.content = $('#content');
-        this.items = {};
-        
-        var _this = this, item;
-        this.collection.each(function(model){
-            item = new VhostView({model: model});
-            _this.menu.append(item.el);
-        });
-    },
-    
-    selectMenuItem: function(name) {
-        var li = this.ul.children('li#li-'+$escape(name));
-        
-        this.ul.children('li').removeClass('selected');
-        li.addClass('selected');
-    },
-    
-    setContent: function(html) {
-        this.content.html(html);
-    }
-});
-
-module.exports = VhostsApp;

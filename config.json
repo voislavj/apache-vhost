@@ -1,15 +1,23 @@
 {
     "app": {
-        "public_dir": "/public",
+    	"root":        "./app",
+        "public_dir":  "/public",
+        "layout_path": "/index.html",
+        
+        "defaults": {
+        	"controller": "index",
+        	"action":     "index"
+        },
         "server": {
-            "port":   "24612"
+            "port":   		 "24612",
+            "js_dispatcher": "/js/index.js"
         },
         "script": {
-            "compress": 1
+            "compress": 0
         }
     },
     "apache": {
-        "root":       "C:/webserver/Apache2.4",
+        "root":       "C:/webserver/Apache",
         "vhost_path": "/conf/extra/httpd-vhosts.conf"
     }
 }

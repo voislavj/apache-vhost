@@ -1,0 +1,47 @@
+@mixin rounded($topLeft, $topRight, $bottomRight, $bottomLeft) {
+  -webkit-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+     -moz-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+      -ms-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+       -o-border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+          border-radius: $topLeft $topRight $bottomRight $bottomLeft;
+}
+
+@mixin rounded-all($radius) {
+  @include rounded($radius, $radius, $radius, $radius);
+}
+
+@mixin rounded-left($radius) {
+  @include rounded($radius, 0, 0, $radius);
+}
+
+@mixin rounded-right($radius) {
+  @include rounded(0, $radius, $radius, 0);
+}
+
+@mixin drop-shadow($x, $y, $r, $color) {
+  -webkit-box-shadow: $x $y $r $color;
+          box-shadow: $x $y $r $color; 
+}
+
+@mixin submit() {
+  @include button;
+  font-weight:bolder;
+  background:#7593B3;
+  color:#fff
+}
+@mixin submit-hover() {
+  background:#369;
+  color:#fff
+}
+@mixin button {
+  background:#ccc;
+  color:#555;
+  border:none;
+  cursor:pointer;
+  padding:3px 6px;
+  @include rounded-all(3px)
+}
+@mixin button-hover {
+  background:#999;
+  color:#fff
+}
