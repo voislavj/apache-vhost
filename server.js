@@ -127,11 +127,13 @@ function browsery(file, callback) {
 };
 
 function httpError(response, message) {
-	console.log("msg: "+ message);
+	message = message || "Error";
+	
     response.writeHeader(500);
-    response.end(message || "Error");
+    response.end(message.toString());
 }
 function httpOk(response, data) {
+    data = data || "OK";
     response.writeHeader(200);
-    response.end(data || "OK");
+    response.end(data);
 }

@@ -7,9 +7,9 @@ module.exports = {
     port: 24612,
     
     _ajaxDefaultOptions: {
-        type: 'GET',
-        data: {},
-        start: function(){},
+        type:     'GET',
+        data:     {},
+        start:    function(){},
         complete: function(){}
     },  
     ajax: function(options){

@@ -1,5 +1,6 @@
-var Backbone = require('backbone');
-var _        = require('lodash');
+var Backbone  = require('backbone');
+var _         = require('lodash');
+var VhostForm = require('./vhost_form');
 
 module.exports = Backbone.View.extend({
     tagName:    'li',
@@ -25,31 +26,26 @@ module.exports = Backbone.View.extend({
         return this;
     },
     
-    edit: function(e) {
-    	this.$el.parent().find('a').removeClass('selected');
-    	this.$el.find('a').addClass('selected');
-        var template = _.template($('#vhost-form').html());
+    edit: function(e) {        
+        this.selectMenuItem();
         
-        _.defaults(this.model.attributes, this.model.defaults());
-        var data = _.cloneDeep(this.model.attributes);
-        for (x in data) {
-            if (_.isArray(data[x])) {
-                data[x] = data[x].pop();
-            }
-            if (! _.isObject(data[x])) {
-                data[x] = _.escape(data[x]);
-            }
-        }
+        var formView = new VhostForm({model: this.model});
+        this.content.html(formView.$el);
         
-        html = template({data: data});
-        
-        this.content.html(html);
-        
+        this.updateContentSize();
+    },
+    
+    selectMenuItem: function() {
+        this.$el.parent().find('a').removeClass('selected');
+        this.$el.find('a').addClass('selected');
+    },
+    
+    updateContentSize: function() {
         $('#content').css('height', 'auto');
         var contentHeight = $('#content').height();
         var vhostsHeight  = $('#vhosts').height();
         if (contentHeight < vhostsHeight) {
-        	$('#content').css('height', vhostsHeight);
+            $('#content').css('height', vhostsHeight);
         }
     }
 });
