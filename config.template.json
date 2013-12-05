@@ -18,6 +18,10 @@
     },
     "apache": {
         "root":       "/where/is/apache/installed",
-        "vhost_path": "/path/to/vhosts.conf/relative/from/apache_root"
+        "vhost_path": "/path/to/vhosts.conf/relative/from/apache_root",
+        "start":      "httpd -k start",
+        "stop":       "httpd -k stop",
+        "restart":    "httpd -k restart",
+        "test":       "tasklist | grep httpd"
     }
 }

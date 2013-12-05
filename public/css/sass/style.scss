@@ -71,9 +71,9 @@ input[type=submit]:hover { @include submit-hover }
 }
 
 .loading {
-  background-image:url(../img/loading.gif);
-  background-repeat:no-repeat;
-  background-position:center center;
+  background-image:url(../img/loading.gif) !important;
+  background-repeat:no-repeat  !important;
+  background-position:center center !important;
 }
 .loading>* {
   visibility:hidden

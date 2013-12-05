@@ -1,6 +1,5 @@
 var Backbone   = require('backbone');
 var _          = require('lodash');
-var Handlebars = require('handlebars');
 var Lib        = require('../../lib');
 
 module.exports = Backbone.View.extend({

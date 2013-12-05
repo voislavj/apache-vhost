@@ -8,7 +8,8 @@
         "lodash":     "*",
         "apacheconf": "*",
         "socket.io":  "*",
-        "backbone":   "*"
+        "backbone":   "*",
+        "exec-sync":  "*"
     },
     "devDependencies": {
         "nodemon":    "*"
