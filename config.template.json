@@ -1,0 +1,23 @@
+{
+    "app": {
+        "root":        "./app",
+        "public_dir":  "/public",
+        "layout_path": "/index.html",
+        
+        "defaults": {
+            "controller": "index",
+            "action":     "index"
+        },
+        "server": {
+            "port":          "PORT",
+            "js_dispatcher": "/js/index.js"
+        },
+        "script": {
+            "compress": 1
+        }
+    },
+    "apache": {
+        "root":       "/where/is/apache/installed",
+        "vhost_path": "/path/to/vhosts.conf/relative/from/apache_root"
+    }
+}
