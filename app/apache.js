@@ -6,6 +6,6 @@ module.exports = {
     restart: function(callback) {
         exec(CONFIG.apache.restart, function(err, stderr, stdout){
             callback(err || stderr, stdout);
-        })
+        });
     }
 };

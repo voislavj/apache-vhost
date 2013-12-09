@@ -21,7 +21,8 @@ module.exports = Backbone.View.extend({
                 name: this.model.name().toString(),
                 attr: this.model.attributes
             }))
-            .data('name', this.model.name());
+            .data('name', this.model.name())
+            .attr('id', this.model.cid);
         
         return this;
     },

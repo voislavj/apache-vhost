@@ -1,6 +1,10 @@
-var Backbone   = require('backbone');
-var _          = require('lodash');
-var Lib        = require('../../lib');
+var Backbone             = require('backbone');
+var _                    = require('lodash');
+var Lib                  = require('../../lib');
+var VhostParam           = require('./vhost_parameter');
+var VhostParamModel      = require('../model/vhost_parameter');
+var VhostParamGroup      = require('./vhost_parameter_group');
+var VhostParamGroupModel = require('../model/vhost_parameter_group');
 
 module.exports = Backbone.View.extend({
     tagName: 'form',
@@ -15,8 +19,29 @@ module.exports = Backbone.View.extend({
     },
     
     render: function() {
-        var tpl = this.parseTemplate();
-        this.$el.html(tpl);
+        var data = this.parseData();
+        var param, paramGroup;
+        for (key in data) {
+            if (_.isObject(data[key])) {
+                paramGroup = new VhostParamGroup({
+                    model: new VhostParamGroupModel({
+                        name:   key,
+                        params: data[key]
+                    })
+                });
+                this.$el.append(paramGroup.render().$el);
+            } else {
+                param = new VhostParam({
+                    model: new VhostParamModel({
+                        name:  key,
+                        value: data[key]
+                    })
+                });
+                this.$el.append(param.render().$el);
+            }
+        }
+        
+        return this;
     },
     
     parseTemplate: function() {
@@ -31,11 +56,8 @@ module.exports = Backbone.View.extend({
         _.defaults(this.model.attributes, this.model.defaults());
         var data = _.cloneDeep(this.model.attributes);
         for (x in data) {
-            if (_.isArray(data[x])) {
+            if (Lib.isArray(data[x])) {
                 data[x] = data[x].pop();
-            }
-            if (! _.isObject(data[x])) {
-                data[x] = _.escape(data[x]);
             }
         }
         

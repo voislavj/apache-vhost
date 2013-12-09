@@ -1,4 +1,5 @@
 require('./jquery-2.0.3.min.js');
+
 /**
  * Dependency injection for Backbone
  */
@@ -36,7 +37,16 @@ lib.ajax({
         
         // select first VirtualHost from the list
         if (appView.collection.length) {
-        	appView.items[0].$el.find('a').eq(0).click();
+            var a;
+            if (location.href.indexOf("#") > 0) {
+                var theHost = location.href.substr(location.href.indexOf("#")+1);
+                theHost = hostsCollection.get(theHost);
+                a = appView.$el.find('li#'+theHost.cid+' a');
+            } else {
+                a = appView.items[0].$el.find('a').eq(0);
+            }
+            
+            a.click();
         }
     }
 });

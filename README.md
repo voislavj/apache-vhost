@@ -1,2 +1,2 @@
-apache-vhost
+Apache VirtualHost administration tool
 ============

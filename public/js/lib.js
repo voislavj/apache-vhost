@@ -11,7 +11,7 @@ module.exports = {
         data:     {},
         start:    function(){},
         complete: function(){}
-    },  
+    },
     ajax: function(options){
         options = _.extend(this._ajaxDefaultOptions, options);
 
@@ -45,5 +45,12 @@ module.exports = {
 
         request.write(post_data);
         request.end();
-    }
+    },
+    
+    isArray: function(variable) {
+        return Object.prototype.toString.call(variable) === '[object Array]';
+    },
+    isObject: function(variable) {
+        return Object.prototype.toString.call(variable) === '[object Object]';
+    },
 };
