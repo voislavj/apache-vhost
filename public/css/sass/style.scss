@@ -1,7 +1,7 @@
 @import "reset";
 @import "mixins";
 
-html, body {height:100%}
+html, body {height:100%;}
 
 body {
     background:#eee;
@@ -16,14 +16,48 @@ form {
         padding:2px 4px;
         border:1px solid #ccc;
         font:11px Arial;
-        width:97%
+        width:97%;
     }
+    
+    button              { @include button; display:inline-block;margin-left:5px; }
+    button:hover        { @include button-hover; }
+    button.submit       { @include submit; }
+    button.submit:hover { @include submit-hover; }
+    button.delete       { @include button; background:#D24141; color:#fff; }
+    button.delete:hover { @include button; background:#B43030; color:#fff; }
+    button.icon, button.icon:hover  {
+        width:12px;
+        height:12px;
+        overflow:hidden;
+        line-height:10px;
+        font-size:10px;
+        font-weight:bolder;
+        padding:0;
+        border:none;
+        background:transparent;
+        color:#aaa
+    }
+    button.icon:hover {
+        color:#333
+    }
+    
     fieldset {
         border:1px solid #ccc;
         padding:10px;
         background:#ddd;
-        margin:30px 0 10px
+        margin:30px 0 10px;
+        position:relative
     }
+    fieldset button {
+        background:#fff;
+        border:1px solid #aaa
+    }
+    fieldset button.remove{
+        position:absolute;
+        right:0;
+        top:-16px
+    }
+            
     legend {
         display:inline-block;
         height:16px;
@@ -33,50 +67,64 @@ form {
         background:#ddd;
         border:1px solid #ccc;
         border-bottom-color: #ddd;
-        margin-top:-20px
+        margin-top:-20px;
+    }
+    
+    p {
+        margin-top:15px;
+    }
+    p:first-child{
+        margin-top:0
+    }
+    label {
+        display:block;
+        cursor:pointer;
+        margin-bottom:5px;
+        font-weight:bolder
+    }
+    .params p {
+        position:relative
+    }
+    .params p button {
+        position:absolute;
+        right:6px;
+        top:18px;
     }
 
 h1 {
-  float:left;
-  font-size:20px;
-  font-weight:normal;
-  color:#fff;
-  margin:10px
+    float:left;
+    font-size:20px;
+    font-weight:normal;
+    color:#fff;
+    margin:10px;
 }
-
-#apache-restart {
-  @include button;
-  display:block;
-  margin:10px;
-  float:right;
-  background:#CBD3DF;
-  color:#43576D
-}
-#apache-restart:hover {
-  @extend input[type=submit]:hover
-}
-
-
-input[type=button]       { @include button }
-input[type=button]:hover { @include button-hover}
-input[type=submit]       { @include submit }
-input[type=submit]:hover { @include submit-hover }
 
 #app-container {
-  @include rounded-all(6px);
-  @include drop-shadow(0, 0, 5px, #aaa);
-  float:left;
-  margin:20px;
-  background:#97A6BE
+    @include rounded-all(6px);
+    @include drop-shadow(0, 0, 5px, #aaa);
+    float:left;
+    margin:20px;
+    background:#97A6BE;
 }
+    .right {
+        float:right
+    }
+    #app-container>button {
+        @include button;
+        margin:10px 10px 10px 0;
+        background:#97A6BE;
+    }
+    #app-container>button:hover {
+        @extend button.submit:hover
+    }
 
 .loading {
-  background-image:url(../img/loading.gif) !important;
-  background-repeat:no-repeat  !important;
-  background-position:center center !important;
+    background-image:url(../img/loading.gif) !important;
+    background-repeat:no-repeat    !important;
+    background-position:center center !important;
 }
 .loading>* {
-  visibility:hidden
+    visibility:hidden;
 }
 
 #vhosts {
@@ -87,38 +135,39 @@ input[type=submit]:hover { @include submit-hover }
     text-align:right;
     padding-bottom:10px;
     margin-top:10px;
-    clear:both
+    clear:both;
 }
     li{
         display:block;
         float:left;
         width:100%;
-        margin-bottom:2px
+        margin-bottom:2px;
     }
     li:last-child{
-        margin-bottom:0
+        margin-bottom:0;
     }
     a {
+        @include rounded-left(4px);
         color:#ddd;
         text-decoration:none;
         display:block;
         float:right;
         padding:5px 10px;
-        @include rounded-left(4px);
     }
     a:hover {
         background:#CBD3DF;
-        color:#43576D
+        color:#43576D;
     }
     .selected {
         background:#fff;
-        color:#000
+        color:#000;
     }
     a.selected:hover {
-        @extend .selected
+        @extend .selected;
     }
 
 #content {
+    @include rounded-all(6px);
     float:left;
     padding:10px;
     margin:0 10px 10px 0;
@@ -127,14 +176,4 @@ input[type=submit]:hover { @include submit-hover }
     min-height:400px;
     overflow:auto;
     font-size:11px;
-    @include rounded-all(6px)
 }
-    p {
-        margin-bottom:15px
-    }
-    label {
-        display:block;
-        cursor:pointer;
-        margin-bottom:5px;
-        font-weight:bolder;
-    }

@@ -1,12 +1,14 @@
-var Backbone  = require('backbone');
-var _         = require('lodash');
-var VhostView = require('./vhost');
-var Lib       = require('../../lib');
+var Backbone   = require('backbone');
+var _          = require('lodash');
+var VhostView  = require('./vhost');
+var VhostModel = require('../model/vhost');
+var Lib        = require('../../lib');
 
 module.exports = Backbone.View.extend({
     el: '#app-container',
     events: {
-        "click #apache-restart": "apacheRestart"
+        "click #apache-restart": "apacheRestart",
+        "click #new-host":       "newHost"
     },
     
     initialize: function() {
@@ -14,20 +16,21 @@ module.exports = Backbone.View.extend({
         this.content = $('#content');
         this.items = {};
         
+        this.listenTo(this.collection, "add", this.render);
+        
         this.items = [];
-        var _this  = this, item;
-        this.collection.each(function(model, index){
-        	item = new VhostView({model: model});
-        	_this.items[index] = item;
-            _this.menu.append(item.el);
-        });
+        this.render();
     },
     
-    selectMenuItem: function(name) {
-        var li = this.ul.children('li#li-'+$escape(name));
-        
-        this.ul.children('li').removeClass('selected');
-        li.addClass('selected');
+    render: function() {
+        var _this = this;
+        var item;
+        this.menu.empty();
+        this.collection.each(function(model, index){
+            item = new VhostView({model: model});
+            _this.items[index] = item;
+            _this.menu.append(item.$el);
+        });
     },
     
     setContent: function(html) {
@@ -46,5 +49,17 @@ module.exports = Backbone.View.extend({
         });
         this.$el.addClass('loading');
         socket.emit('apache-restart');
+    },
+    
+    newHost: function() {
+        var name = prompt('Host name:');
+        if (name) {
+            this.collection.add({
+                "ServerName": name
+            });
+            this.menu
+                .children('li#'+this.collection.get(name).cid)
+                .children('a').click();
+        }
     }
 });

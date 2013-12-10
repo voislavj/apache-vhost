@@ -4,8 +4,6 @@ var VhostForm = require('./vhost_form');
 
 module.exports = Backbone.View.extend({
     tagName:    'li',
-    template:   _.template($('#vhost-item').html()),
-    
     events: {
         "click a": "edit"
     },
@@ -16,11 +14,10 @@ module.exports = Backbone.View.extend({
     },
     
     render: function(){
+        var name = this.model.name();
+        var a = $('<a href="#'+name+'">'+name+'</a>');
         this.$el
-            .html(this.template({
-                name: this.model.name().toString(),
-                attr: this.model.attributes
-            }))
+            .html(a)
             .data('name', this.model.name())
             .attr('id', this.model.cid);
         

@@ -37,13 +37,13 @@ lib.ajax({
         
         // select first VirtualHost from the list
         if (appView.collection.length) {
-            var a;
+            var a = appView.items[0].$el.find('a').eq(0);
             if (location.href.indexOf("#") > 0) {
                 var theHost = location.href.substr(location.href.indexOf("#")+1);
                 theHost = hostsCollection.get(theHost);
-                a = appView.$el.find('li#'+theHost.cid+' a');
-            } else {
-                a = appView.items[0].$el.find('a').eq(0);
+                if (theHost) {
+                    a = appView.$el.find('li#'+theHost.cid+' a');
+                }
             }
             
             a.click();

@@ -1,13 +1,16 @@
 var Backbone   = require('backbone');
 var _          = require('lodash');
 var Lib        = require('../../lib');
+var VhostParam = require('./vhost_parameter');
 
 module.exports = Backbone.Model.extend({
     idAttribute: "name",
     defaults: function(){
         return {
             "name":   "ParamGroup",
-            "params": []
+            "params": {
+                "$args": ""
+            }
         };
     },
 

@@ -20,7 +20,25 @@ module.exports = Backbone.View.extend({
     
     render: function() {
         var data = this.parseData();
-        var param, paramGroup;
+        
+        // add buttons
+        $('<button class="submit">Save</button>')
+            .appendTo(this.$el)
+            .click(function(){
+                alert('Saved.');
+            });
+        $('<button class="delete">Delete</button>')
+            .appendTo(this.$el)
+            .click(function(){
+                if (confirm('Do you want to delete the item?')) {
+                    alert('Deleted.');
+                }
+            });
+        
+        // add params, groups
+        var param;
+        var paramGroup;
+        var paramContainer = $('<div class="params">');
         for (key in data) {
             if (_.isObject(data[key])) {
                 paramGroup = new VhostParamGroup({
@@ -29,7 +47,7 @@ module.exports = Backbone.View.extend({
                         params: data[key]
                     })
                 });
-                this.$el.append(paramGroup.render().$el);
+                paramContainer.append(paramGroup.render().$el);
             } else {
                 param = new VhostParam({
                     model: new VhostParamModel({
@@ -37,19 +55,22 @@ module.exports = Backbone.View.extend({
                         value: data[key]
                     })
                 });
-                this.$el.append(param.render().$el);
+                paramContainer.append(param.render().$el);
             }
         }
+        this.$el.append(paramContainer);
+        
+        // add buttons
+        $('<button>add param</button>')
+            .appendTo(this.$el)
+            .data('view', this)
+            .click(this.addParam);
+        $('<button>add group</button>')
+            .appendTo(this.$el)
+            .data('view', this)
+            .click(this.addParamGroup);
         
         return this;
-    },
-    
-    parseTemplate: function() {
-        var data = this.parseData();
-        
-        return this.template({
-            data: data
-        });
     },
 
     parseData: function() {
@@ -62,7 +83,32 @@ module.exports = Backbone.View.extend({
         }
         
         return data;
-    }
+    },
     
+    addParam: function() {
+        var _this = $(this).data('view');
+        var name = prompt('Parameter name:');
+        if (name) {
+            var paramView = new VhostParam({
+                model: new VhostParamModel({
+                    name: name
+                })
+            });
+            _this.$el.find('.params').append(paramView.render().$el);
+        }
+    },
+    
+    addParamGroup: function() {
+        var _this = $(this).data('view');
+        var name = prompt('Group name:');
+        if (name) {
+            var paramGroupView = new VhostParamGroup({
+                model: new VhostParamGroupModel({
+                    name: name
+                })
+            });
+            _this.$el.append(paramGroupView.render().$el);
+        }
+    }
     
 });

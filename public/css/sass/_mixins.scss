@@ -6,17 +6,9 @@
           border-radius: $topLeft $topRight $bottomRight $bottomLeft;
 }
 
-@mixin rounded-all($radius) {
-  @include rounded($radius, $radius, $radius, $radius);
-}
-
-@mixin rounded-left($radius) {
-  @include rounded($radius, 0, 0, $radius);
-}
-
-@mixin rounded-right($radius) {
-  @include rounded(0, $radius, $radius, 0);
-}
+@mixin rounded-all  ($radius) { @include rounded($radius, $radius, $radius, $radius) }
+@mixin rounded-left ($radius) { @include rounded($radius, 0, 0, $radius) }
+@mixin rounded-right($radius) { @include rounded(0, $radius, $radius, 0) }
 
 @mixin drop-shadow($x, $y, $r, $color) {
   -webkit-box-shadow: $x $y $r $color;
